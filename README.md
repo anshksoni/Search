@@ -5,12 +5,11 @@ Python implementation of Various Guided Search Models
 </p>
 
 ```
-@article{
+@article{ Coming Soon!
 }
 ```
 
-## System Requirements
-
+### AREA UNDER CONTSTRUCTION
 
 
 ### License
