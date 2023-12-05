@@ -7,13 +7,13 @@ from more_itertools import distinct_permutations as idp
 
 class stimuli_gen:
 
-    def __init__(self,searchtype,tang,dang,tcol,dcol,length=6,width=3,n244=4,N=12):
+    def __init__(self,searchtype,tang,dang,tcol,dcol,length=6,width=3,n224=4,N=12):
         self.target_angle    = tang
         self.dist_angle      = dang
-        self.target_color    = tcol
-        self.dist_color      = dcol
+        self.target_luminance    = tcol
+        self.dist_luminance      = dcol
         self.searchtype      = searchtype
-        self.imgsize         = n244
+        self.imgsize         = n224
         self.N               = N
         self.width           = width
         self.length          = length
@@ -40,23 +40,23 @@ class stimuli_gen:
             image_to_draw_on=128*np.ones((self.imgsize*224,self.imgsize*224))
             
             #DrawTarget
-            image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,i[0],self.target_color)
+            image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,i[0],self.target_luminance)
             #DrawDists
             if self.searchtype=='conj':
                 for m in i[1:]:
                     if random.randint(0, 1)==1:
-                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_color)
+                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_luminance)
                     else:
-                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_color)
+                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_luminance)
             
-            if self.searchtype=='color':
+            if self.searchtype=='luminance':
                 for m in i[1:]:
-                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_color) 
+                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_luminance) 
             
 
             if self.searchtype=='angle':
                 for m in i[1:]:
-                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_color) 
+                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_luminance) 
             
             all_stim.append(image_to_draw_on)
         return np.array(all_stim)
@@ -75,18 +75,18 @@ class stimuli_gen:
             if self.searchtype=='conj':
                 for m in i:
                     if random.randint(0, 1)==1:
-                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_color)
+                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_luminance)
                     else:
-                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_color)
+                        image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_luminance)
                         
-            if self.searchtype=='color':
+            if self.searchtype=='luminance':
                 for m in i:
-                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_color) 
+                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,m,self.dist_luminance) 
             
 
             if self.searchtype=='angle':
                 for m in i:
-                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_color) 
+                    image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,m,self.target_luminance) 
             
             all_stim.append(image_to_draw_on)
         return np.array(all_stim)
@@ -118,21 +118,21 @@ class stimuli_gen:
         center=self.get_centre(self.N)
         d=self.imgsize*(self.length+2)
         image_to_draw_on=128*np.ones((self.imgsize*224,self.imgsize*224))
-        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,self.N,self.dist_color)
-        color_dist_item=image_to_draw_on[int(center[1]-d):int(center[1]+d),int(center[0]-d):int(center[0]+d)]/255
+        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,self.N,self.dist_luminance)
+        luminance_dist_item=image_to_draw_on[int(center[1]-d):int(center[1]+d),int(center[0]-d):int(center[0]+d)]/255
         image_to_draw_on=128*np.ones((self.imgsize*224,self.imgsize*224))
-        image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,self.N,self.target_color)
+        image_to_draw_on=self.draw_slope(image_to_draw_on,self.dist_angle,self.N,self.target_luminance)
         angle_dist_item=image_to_draw_on[int(center[1]-d):int(center[1]+d),int(center[0]-d):int(center[0]+d)]/255
         image_to_draw_on=128*np.ones((self.imgsize*224,self.imgsize*224))
-        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,self.N,self.target_color)
+        image_to_draw_on=self.draw_slope(image_to_draw_on,self.target_angle,self.N,self.target_luminance)
         target_dist_item=image_to_draw_on[int(center[1]-d):int(center[1]+d),int(center[0]-d):int(center[0]+d)]/255
-        return target_dist_item,color_dist_item,angle_dist_item
+        return target_dist_item,luminance_dist_item,angle_dist_item
 
 
 
     def makedicts(self):
         setsizes = [*range(1,self.N+1)]
-        singlesettypedictcolor={}
+        singlesettypedictluminance={}
         singlesettypedictangle={}
         singlesettypedictconj={}
 
@@ -144,8 +144,8 @@ class stimuli_gen:
                 temppres.append(2)
             while len(tempabs)<i:
                 tempabs.append(2)
-            singlesettypedictcolor['pset'+str(i)]=temppres
-            singlesettypedictcolor['aset'+str(i)]=tempabs
+            singlesettypedictluminance['pset'+str(i)]=temppres
+            singlesettypedictluminance['aset'+str(i)]=tempabs
 
         for i in setsizes:
             temppres=[1]
@@ -170,22 +170,22 @@ class stimuli_gen:
             singlesettypedictconj['pset'+str(i)]=temppres
             singlesettypedictconj['aset'+str(i)]=tempabs
 
-        return singlesettypedictconj ,singlesettypedictcolor, singlesettypedictangle
+        return singlesettypedictconj ,singlesettypedictluminance, singlesettypedictangle
 
     
     def makeallcombs(self):
         try:
             settypedictconj=np.load('Data/itemCombs/'+str(self.N)+'settypedictconj.npy',allow_pickle=True)[()]
-            settypedictcolor=np.load('Data/itemCombs/'+str(self.N)+'settypedictcolor.npy',allow_pickle=True)[()]
+            settypedictluminance=np.load('Data/itemCombs/'+str(self.N)+'settypedictluminance.npy',allow_pickle=True)[()]
             settypedictangle=np.load('Data/itemCombs/'+str(self.N)+'settypedictangle.npy',allow_pickle=True)[()]
         except:
-            singlesettypedictconj ,singlesettypedictcolor, singlesettypedictangle = self.makedicts()
+            singlesettypedictconj ,singlesettypedictluminance, singlesettypedictangle = self.makedicts()
             settypedictconj={}
-            settypedictcolor={}
+            settypedictluminance={}
             settypedictangle={}
             
-            for i in singlesettypedictcolor.keys():
-                settypedictcolor[i]= np.unique(np.array(list(idp(singlesettypedictcolor[i]))),axis=0)
+            for i in singlesettypedictluminance.keys():
+                settypedictluminance[i]= np.unique(np.array(list(idp(singlesettypedictluminance[i]))),axis=0)
             for i in singlesettypedictangle.keys():
                 settypedictangle[i]= np.unique(np.array(list(idp(singlesettypedictangle[i]))),axis=0)
             
@@ -200,4 +200,4 @@ class stimuli_gen:
                             temp2.append(j)
                     settypedictconj[i]=np.array(temp2)
 
-        return settypedictconj, settypedictcolor,settypedictangle
+        return settypedictconj, settypedictluminance,settypedictangle
