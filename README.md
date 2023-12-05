@@ -12,14 +12,16 @@ Python implementation of Various Search Models
 ### Installation 
 
 To clone the repository, use:
- '''
+ ```
  git clone https://github.com/anshksoni/Search.git
- '''
+ ```
+
 You can create a conda environment to run the code with:
 
-'''
+```
 conda env create -f env.yml
-'''
+```
+
 
 ### Usage
 
