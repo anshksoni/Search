@@ -101,7 +101,7 @@ class stimuli_gen:
         full_set=(full_set+np.random.normal(0,noise,size=full_set.shape))/255
         g_truth=np.concatenate((np.ones(n_images*3),np.zeros(n_images*3)))
         g_truth=to_categorical(g_truth, num_classes=2)
-        full_set=full_set.reshape(-1,224,224,1)
+        full_set=full_set.reshape(-1,self.imgsize*224,self.imgsize*224,1)
         return full_set, g_truth
     
     def testsetmaker(self,set_size,n_images,noise):
@@ -110,7 +110,7 @@ class stimuli_gen:
         full_set=(full_set+np.random.normal(0,noise,size=full_set.shape))/255
         g_truth=np.concatenate((np.ones(n_images),np.zeros(n_images)))
         g_truth=to_categorical(g_truth, num_classes=2)
-        full_set=full_set.reshape(-1,224,224,1)
+        full_set=full_set.reshape(-1,self.imgsize*224,self.imgsize*224,1)
         return full_set, g_truth 
 
 
