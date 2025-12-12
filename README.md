@@ -5,7 +5,7 @@ Python implementation of Various Search Models
 </p>
 
 ```
-@article{PDF In Repository, ArXiv Coming Soon!}
+@article{PDF In Repository}
 ```
 
 ### Installation 
